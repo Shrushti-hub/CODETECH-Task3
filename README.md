@@ -65,3 +65,6 @@ User Insights
 2. Student: View grades, attendance, and academic history.
 3. Parent: Access student progress and grades (optional).
 
+
+
+![Screen Shot 2024-08-04 at 5 06 12 PM](https://github.com/user-attachments/assets/9c6c0b6a-24e1-4581-a37b-cb3282ffff7a)
