@@ -1,0 +1,195 @@
+/* C++ code to create a student management system that can handle student registrations, maintain student records, and calculate grades. 
+The system should allow adding, editing, and deleting student information. */
+
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Student {
+    int id;
+    string name;
+    vector<int> grades;
+};
+
+// Function prototypes
+void addStudent(vector<Student>& students);
+void editStudent(vector<Student>& students);
+void deleteStudent(vector<Student>& students);
+void viewStudent(const vector<Student>& students);
+void calculateGrades(const vector<Student>& students);
+int findStudentIndex(const vector<Student>& students, int id);
+void printStudent(const Student& student);
+
+int main() {
+    vector<Student> students;
+    int choice;
+
+    do {
+        cout << "\nStudent Management System\n";
+        cout << "1. Add Student\n";
+        cout << "2. Edit Student\n";
+        cout << "3. Delete Student\n";
+        cout << "4. View Student\n";
+        cout << "5. Calculate Grades\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // To ignore any trailing newline characters
+
+        switch (choice) {
+            case 1:
+                addStudent(students);
+                break;
+            case 2:
+                editStudent(students);
+                break;
+            case 3:
+                deleteStudent(students);
+                break;
+            case 4:
+                viewStudent(students);
+                break;
+            case 5:
+                calculateGrades(students);
+                break;
+            case 6:
+                cout << "Exiting system.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 6);
+
+    return 0;
+}
+
+// Function to add a student
+void addStudent(vector<Student>& students) {
+    Student student;
+    cout << "Enter student ID: ";
+    cin >> student.id;
+    cin.ignore(); // To ignore any trailing newline characters
+    cout << "Enter student name: ";
+    getline(cin, student.name);
+
+    int numGrades;
+    cout << "Enter number of grades: ";
+    cin >> numGrades;
+    student.grades.resize(numGrades);
+    cout << "Enter grades:\n";
+    for (int i = 0; i < numGrades; ++i) {
+        cout << "Grade " << (i + 1) << ": ";
+        cin >> student.grades[i];
+    }
+
+    students.push_back(student);
+    cout << "Student added successfully.\n";
+}
+
+// Function to edit a student
+void editStudent(vector<Student>& students) {
+    int id;
+    cout << "Enter student ID to edit: ";
+    cin >> id;
+    cin.ignore(); // To ignore any trailing newline characters
+
+    int index = findStudentIndex(students, id);
+    if (index == -1) {
+        cout << "Student not found.\n";
+        return;
+    }
+
+    Student& student = students[index];
+    cout << "Editing student: " << student.name << endl;
+    cout << "Enter new name: ";
+    getline(cin, student.name);
+
+    int numGrades;
+    cout << "Enter new number of grades: ";
+    cin >> numGrades;
+    student.grades.resize(numGrades);
+    cout << "Enter new grades:\n";
+    for (int i = 0; i < numGrades; ++i) {
+        cout << "Grade " << (i + 1) << ": ";
+        cin >> student.grades[i];
+    }
+
+    cout << "Student updated successfully.\n";
+}
+
+// Function to delete a student
+void deleteStudent(vector<Student>& students) {
+    int id;
+    cout << "Enter student ID to delete: ";
+    cin >> id;
+
+    int index = findStudentIndex(students, id);
+    if (index == -1) {
+        cout << "Student not found.\n";
+        return;
+    }
+
+    students.erase(students.begin() + index);
+    cout << "Student deleted successfully.\n";
+}
+
+// Function to view a student
+void viewStudent(const vector<Student>& students) {
+    int id;
+    cout << "Enter student ID to view: ";
+    cin >> id;
+
+    int index = findStudentIndex(students, id);
+    if (index == -1) {
+        cout << "Student not found.\n";
+        return;
+    }
+
+    printStudent(students[index]);
+}
+
+// Function to calculate and print grades
+void calculateGrades(const vector<Student>& students) {
+    for (const auto& student : students) {
+        cout << "Student: " << student.name << endl;
+        if (student.grades.empty()) {
+            cout << "No grades available.\n";
+            continue;
+        }
+
+        double total = 0;
+        for (int grade : student.grades) {
+            total += grade;
+        }
+        double average = total / student.grades.size();
+
+        cout << "Average Grade: " << average << endl;
+    }
+}
+
+// Function to find student index by ID
+int findStudentIndex(const vector<Student>& students, int id) {
+    for (size_t i = 0; i < students.size(); ++i) {
+        if (students[i].id == id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Function to print student details
+void printStudent(const Student& student) {
+    cout << "Student ID: " << student.id << endl;
+    cout << "Student Name: " << student.name << endl;
+    if (student.grades.empty()) {
+        cout << "No grades available.\n";
+        return;
+    }
+    cout << "Grades:\n";
+    for (size_t i = 0; i < student.grades.size(); ++i) {
+        cout << "Grade " << (i + 1) << ": " << student.grades[i] << endl;
+    }
+}
