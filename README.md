@@ -1,11 +1,11 @@
 # CODETECH-Task3
 
-Name - Shrushti Sharma
-Company Name - CODETECH IT SOLUTIONS
-ID - 
-Domain - C++ Programming Language
-Duration - 
-Mentor - 
+Name - Shrushti Sharma 
+Company Name - CODETECH IT SOLUTIONS 
+ID - CT08DS6586
+Domain - C++ Programming Language 
+Duration - August to September 2024
+Mentor - Neela Santosh Kumar
 
 Overview of the Project :
 
